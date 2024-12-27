@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="persistence-data">
+        <class>com.sfood.entity.account.AccountEntity</class>
+        <class>com.sfood.entity.account.SocialAccountEntity</class>
+        <class>com.sfood.entity.actor.CustomerEntity</class>
+        <class>com.sfood.entity.actor.OwnerEntity</class>
+        <class>com.sfood.entity.cart.CartEntity</class>
+        <class>com.sfood.entity.cart.CartItemEntity</class>
+        <class>com.sfood.entity.discount.FoodDiscountEntity</class>
+        <class>com.sfood.entity.discount.BillDiscountEntity</class>
+        <class>com.sfood.entity.item.CategoryEntity</class>
+        <class>com.sfood.entity.item.FoodEntity</class>
+        <class>com.sfood.entity.order.ReturnOrderEntity</class>
+        <class>com.sfood.entity.order.OrderEntity</class>
+        <class>com.sfood.entity.order.OrderDetailsEntity</class>
+        <class>com.sfood.entity.order.OrderStatus</class>
+        <class>com.sfood.entity.shipping.AddressEntity</class>
+        <class>com.sfood.entity.shipping.OrderShippingEntity</class>
+        <class>com.sfood.entity.shipping.OrderInfoEntity</class>
+
+    </persistence-unit>
+</persistence>
+
