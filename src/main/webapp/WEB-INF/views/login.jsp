@@ -53,12 +53,12 @@
 
         <div class="register-link social-icon">
             <!-- Biểu tượng Facebook -->
-            <a href="/oauth2/authorization/facebook" target="_blank">
+            <a href="/login/facebook-login" target="_blank">
                 <i class="fab fa-facebook"></i>
             </a>
 
             <!-- Biểu tượng Google -->
-            <a href="https://www.google.com" target="_blank">
+            <a href="/login/google-login" target="_blank">
                 <i class="fab fa-google"></i>
             </a>
         </div>

@@ -15,6 +15,18 @@ public class UserDTO {
     private LocalDate dateOfBirth;
     private String avatar;
 
+    public UserDTO(Long id, String name, String email, String phone, LocalDate dateOfBirth, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.dateOfBirth = dateOfBirth;
+        this.avatar = avatar;
+    }
+    public UserDTO() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -8,6 +8,17 @@ public class SocialAccountDTO {
     private String ggID;
     private EnumAccountStatus status;
 
+    public SocialAccountDTO(Long id, String fbID, String ggID, EnumAccountStatus status) {
+        this.id = id;
+        this.fbID = fbID;
+        this.ggID = ggID;
+        this.status = status;
+    }
+
+    public SocialAccountDTO() {
+
+    }
+
     public Long getId() {
         return id;
     }

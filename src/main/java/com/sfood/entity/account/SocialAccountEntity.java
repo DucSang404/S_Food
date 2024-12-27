@@ -22,7 +22,7 @@ public class SocialAccountEntity {
     @Column(name = "status")
     private EnumAccountStatus status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private CustomerEntity customer;
 
