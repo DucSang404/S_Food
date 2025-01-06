@@ -14,6 +14,7 @@ public class UserDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private String avatar;
+    private AccountDTO accountDTO;
 
     public UserDTO(Long id, String name, String email, String phone, LocalDate dateOfBirth, String avatar) {
         this.id = id;
@@ -25,6 +26,14 @@ public class UserDTO {
     }
     public UserDTO() {
 
+    }
+
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
+    }
+
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
     }
 
     public Long getId() {

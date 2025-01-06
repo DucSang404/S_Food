@@ -13,6 +13,7 @@ public class CustomerMapper implements GenericMapper<CustomerEntity, CustomerDTO
     public CustomerDTO toDTO(CustomerEntity entity) {
         LocalDate date = entity.getDateOfBirth();
         CustomerDTO dto = new CustomerDTO();
+        dto.setId(entity.getId());
         dto.setEmail(entity.getEmail());
         dto.setPhone(entity.getPhone());
         dto.setName(entity.getName());

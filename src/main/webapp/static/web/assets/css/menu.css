@@ -1,0 +1,323 @@
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--surface-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    /* Tách hai phần: category và search-container */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+    margin-bottom: 20px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.filters select {
+    flex-shrink: 0;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 200px;
+}
+
+.filters select:focus {
+    border-color: #e45050;
+    box-shadow: 0 0 10px rgba(228, 80, 80, 0.5);
+}
+
+.filters select option {
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.search-container input[type="text"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.search-container button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+.search-input {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+
+/* Đảm bảo CSS cho các phần tử được áp dụng chính xác */
+#search {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+#search:focus {
+    border-color: #e45050;
+    box-shadow: 0 0 10px rgba(228, 80, 80, 0.5);
+}
+
+#searchButton {
+    padding: 10px 20px;
+    background-color: #e45050;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#searchButton:hover {
+    background-color: #d44040;
+}
+
+.product-grid {
+    display: grid;
+    /* Sử dụng Grid layout */
+    grid-template-columns: repeat(3, 1fr);
+    /* Hiển thị cố định 3 cột */
+    /* Chia cột tự động */
+    gap: 20px;
+    /* Khoảng cách giữa các sản phẩm */
+    padding: 20px;
+    max-width: 1200px;
+    /* Giới hạn chiều rộng của toàn bộ grid */
+    margin: 0 auto;
+    /* Căn giữa grid */
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    /* Đường viền cho sản phẩm */
+    border-radius: 8px;
+    /* Bo góc */
+    padding: 15px;
+    background-color: var(--surface-color);
+    /* Màu nền sản phẩm */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng đổ bóng */
+    text-align: center;
+    /* Căn giữa nội dung */
+    overflow: hidden;
+    /* Giới hạn nội dung bên trong */
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    /* Hiệu ứng khi hover */
+}
+
+.product-card img {
+    width: 100%;
+    /* Kích thước ảnh tự động căn theo card */
+    height: 200px;
+    /* Chiều cao cố định cho ảnh */
+    object-fit: contain;
+    /* Cắt ảnh nếu kích thước không khớp */
+    border-radius: 8px;
+    /* Bo góc cho ảnh */
+}
+
+
+.add-cart {
+    position: absolute;
+    top: 40px;
+    right: -150px;
+    padding: 10px 15px;
+    background: #e45050;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: bold;
+    border-radius: 5px;
+    opacity: 0;
+    /* Ẩn nút */
+    visibility: hidden;
+}
+
+.add-cart:hover {
+    scale: 1.1;
+    color: white;
+    background-color: #be2626;
+}
+
+.product__item:hover .add-cart {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    animation: slideIn 0.5s ease forwards;
+    /* Hiệu ứng trượt vào */
+}
+
+@keyframes slideIn {
+    0% {
+        right: -150px;
+        /* Bắt đầu từ ngoài khung */
+        opacity: 0;
+        /* Ẩn nút */
+    }
+
+    100% {
+        right: 20px;
+        /* Vị trí trong khung */
+        opacity: 1;
+        /* Hiển thị nút */
+    }
+}
+
+.product__item__text .add-cart {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.rating i {
+    color: #ffd700;
+    margin: 0 2px;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+#stats {
+    position: relative;
+}
+
+#stats img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.text-overlay h2 {
+    font-size: 4rem;
+    margin: 0;
+}
+
+.text-overlay p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.background-image {
+    width: 100%;
+    height: auto;
+    filter: brightness(1) contrast(1.2);
+    position: relative;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    font-size: 1rem;
+    border: none;
+    background-color: #e45050;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.pagination button:hover {
+    background-color: #ce3131;
+    scale: 1.1;
+}
+
+.pagination button.active {
+    background-color: #444;
+}
+
+.view_details {
+    font-size: 1rem;
+    color: #e45050;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.view_details:hover {
+    color: #ce3131;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.view_details:active {
+    color: #ce3131;
+}

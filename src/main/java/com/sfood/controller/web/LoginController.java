@@ -5,26 +5,30 @@ import com.sfood.dto.CustomerDTO;
 import com.sfood.dto.SocialAccountDTO;
 import com.sfood.enums.EnumAccountStatus;
 import com.sfood.service.impl.SocialAccountService;
+import com.sfood.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
 public class LoginController {
     @Autowired
     private SocialAccountService socialAccountService;
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView loginPage() {
-        ModelAndView mav = new ModelAndView("login");
-        return mav;
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        return "login";
     }
 
     @GetMapping("/login/facebook-login")
@@ -38,7 +42,8 @@ public class LoginController {
 
     //Facebook
     @GetMapping("/login/facebook-callback")
-    public String handleFacebookCallback(@RequestParam("code") String code) {
+    public String handleFacebookCallback(@RequestParam("code") String code,
+                                         Model model) throws IOException {
         String tokenUrl = SocialConfig.get("facebook.token.url") +
                 "?client_id=" + SocialConfig.get("facebook.app.id") +
                 "&redirect_uri=" + SocialConfig.get("facebook.redirect.uri") +
@@ -59,6 +64,13 @@ public class LoginController {
         SocialAccountDTO socialAccountDTO = new SocialAccountDTO(null, fbId, null, EnumAccountStatus.ACTIVE);
         CustomerDTO customerDTO = new CustomerDTO(null, name, null, null, null, null);
         socialAccountService.registerSocialAccount(socialAccountDTO, customerDTO);
+
+        customerDTO = socialAccountService.findCustomerByFbId(fbId);
+
+        Authentication authentication = jwtUtils.createAuthentication(customerDTO);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        model.addAttribute("user", customerDTO);
         return "web/home";
     }
 
@@ -73,7 +85,8 @@ public class LoginController {
 
     //Google
     @GetMapping("/login/google-callback")
-    public String handleGoogleCallback(@RequestParam("code") String code) {
+    public String handleGoogleCallback(@RequestParam("code") String code,
+                                       Model model) throws IOException {
         String tokenUrl = SocialConfig.get("google.token.url") +
                 "?client_id=" + SocialConfig.get("google.client.id") +
                 "&client_secret=" + SocialConfig.get("google.client.secret") +
@@ -96,8 +109,13 @@ public class LoginController {
         SocialAccountDTO socialAccountDTO = new SocialAccountDTO(null, null, ggId, EnumAccountStatus.ACTIVE);
         CustomerDTO customerDTO = new CustomerDTO(null, name, email, null, null, null);
         socialAccountService.registerSocialAccount(socialAccountDTO, customerDTO);
+
+        customerDTO = socialAccountService.findCustomerByGgId(ggId);
+
+        Authentication authentication = jwtUtils.createAuthentication(customerDTO);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        model.addAttribute("user", customerDTO);
         return "web/home";
     }
-
-
 }

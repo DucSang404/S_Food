@@ -27,4 +27,18 @@ public class SocialAccountService {
         socialAccountEntity.setCustomer(customerEntity);
         socialAccountRepository.save(socialAccountEntity);
     }
+
+    public CustomerDTO findCustomerByFbId(String fbId) {
+        SocialAccountEntity socialAccountEntity = socialAccountRepository.findByFbId(fbId);
+        CustomerEntity customerEntity = socialAccountEntity.getCustomer();
+        return customerMapper.toDTO(customerEntity);
+    }
+
+    public CustomerDTO findCustomerByGgId(String ggId) {
+        SocialAccountEntity socialAccountEntity = socialAccountRepository.findByGgId(ggId);
+        CustomerEntity customerEntity = socialAccountEntity.getCustomer();
+        return customerMapper.toDTO(customerEntity);
+    }
+
+
 }

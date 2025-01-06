@@ -53,4 +53,10 @@ public class AccountService {
         accountEntity.setCustomer(customerEntity);
         accountRepository.save(accountEntity);
     }
+
+    public CustomerDTO findCustomerByUserName(String username) {
+        AccountEntity accountEntity = accountRepository.findByUserName(username);
+        CustomerEntity customerEntity = accountEntity.getCustomer();
+        return customerMapper.toDTO(customerEntity);
+    }
 }
