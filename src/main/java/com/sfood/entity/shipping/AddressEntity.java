@@ -11,17 +11,17 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "concrete")
-    private String concrete;
+    @Column(name = "street")
+    private String street;
 
-    @Column(name = "commune")
-    private String commune;
+    @Column(name = "ward")
+    private String ward;
 
     @Column(name = "district")
     private String district;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "province")
+    private String province;
 
     @OneToOne(mappedBy = "address")
     private OwnerEntity owner;
@@ -37,20 +37,29 @@ public class AddressEntity {
         this.id = id;
     }
 
-    public String getConcrete() {
-        return concrete;
+
+    public String getStreet() {
+        return street;
     }
 
-    public void setConcrete(String concrete) {
-        this.concrete = concrete;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getCommune() {
-        return commune;
+    public String getWard() {
+        return ward;
     }
 
-    public void setCommune(String commune) {
-        this.commune = commune;
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getDistrict() {
@@ -61,13 +70,7 @@ public class AddressEntity {
         this.district = district;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public OwnerEntity getOwner() {
         return owner;

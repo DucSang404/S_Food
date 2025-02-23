@@ -1,0 +1,59 @@
+:root {
+    --primary-color: #e45050;   /* Màu chủ đạo */
+    --bg-color: #fff;           /* Nền trắng */
+    --text-color: #333;         /* Màu chữ tối, hài hòa */
+    --border-color: #e45050;     /* Viền cùng màu chủ đạo */
+    --shadow-color: rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.btn-primary:hover {
+    background-color: #cf4242 !important;
+    border-color: #cf4242 !important;
+}
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--shadow-color);
+}
+.modal-header,
+.modal-footer {
+    border-color: var(--primary-color);
+}
+.modal-title {
+    color: var(--primary-color);
+}
+.address-block {
+    background-color: var(--bg-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.default-badge {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+/* Tùy chỉnh cho các nút sửa, thêm */
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+.btn-warning:hover {
+    background-color: #ec9c3d;
+    border-color: #ec9c3d;
+}
+
+.form-check {
+    text-align: left;
+}
+
+.btn-secondary {
+    background-color: rgb(128, 128, 128) !important;
+}

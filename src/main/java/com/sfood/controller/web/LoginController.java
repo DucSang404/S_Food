@@ -1,9 +1,11 @@
 package com.sfood.controller.web;
 
+import com.nimbusds.jose.JOSEException;
 import com.sfood.config.SocialConfig;
 import com.sfood.dto.CustomerDTO;
 import com.sfood.dto.SocialAccountDTO;
 import com.sfood.enums.EnumAccountStatus;
+import com.sfood.service.impl.CustomUserDetailsService;
 import com.sfood.service.impl.SocialAccountService;
 import com.sfood.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,6 +29,8 @@ public class LoginController {
     private SocialAccountService socialAccountService;
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("/login")
     public String loginPage(Model model) {
@@ -43,7 +49,9 @@ public class LoginController {
     //Facebook
     @GetMapping("/login/facebook-callback")
     public String handleFacebookCallback(@RequestParam("code") String code,
-                                         Model model) throws IOException {
+                                         Model model, HttpServletRequest request,
+                                         HttpSession session) throws IOException, JOSEException {
+
         String tokenUrl = SocialConfig.get("facebook.token.url") +
                 "?client_id=" + SocialConfig.get("facebook.app.id") +
                 "&redirect_uri=" + SocialConfig.get("facebook.redirect.uri") +
@@ -70,6 +78,10 @@ public class LoginController {
         Authentication authentication = jwtUtils.createAuthentication(customerDTO);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        String token = customUserDetailsService.generateTokenSocial(fbId);
+        request.getSession().setAttribute("token", token);
+
+        session.setAttribute("user", customerDTO);
         model.addAttribute("user", customerDTO);
         return "web/home";
     }
@@ -86,7 +98,8 @@ public class LoginController {
     //Google
     @GetMapping("/login/google-callback")
     public String handleGoogleCallback(@RequestParam("code") String code,
-                                       Model model) throws IOException {
+                                       Model model, HttpServletRequest request,
+                                       HttpSession session) throws IOException, JOSEException {
         String tokenUrl = SocialConfig.get("google.token.url") +
                 "?client_id=" + SocialConfig.get("google.client.id") +
                 "&client_secret=" + SocialConfig.get("google.client.secret") +
@@ -115,7 +128,12 @@ public class LoginController {
         Authentication authentication = jwtUtils.createAuthentication(customerDTO);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        String token = customUserDetailsService.generateTokenSocial(ggId);
+        request.getSession().setAttribute("token", token);
+
         model.addAttribute("user", customerDTO);
+        session.setAttribute("user", customerDTO);
+
         return "web/home";
     }
 }

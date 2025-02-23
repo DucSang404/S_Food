@@ -2,10 +2,10 @@ package com.sfood.dto;
 
 public class AddressDTO {
     private Long id;
-    private String concrete;
-    private String commune;
+    private String street;
+    private String ward;
     private String district;
-    private String city;
+    private String province;
 
     public Long getId() {
         return id;
@@ -15,21 +15,6 @@ public class AddressDTO {
         this.id = id;
     }
 
-    public String getConcrete() {
-        return concrete;
-    }
-
-    public void setConcrete(String concrete) {
-        this.concrete = concrete;
-    }
-
-    public String getCommune() {
-        return commune;
-    }
-
-    public void setCommune(String commune) {
-        this.commune = commune;
-    }
 
     public String getDistrict() {
         return district;
@@ -39,11 +24,27 @@ public class AddressDTO {
         this.district = district;
     }
 
-    public String getCity() {
-        return city;
+    public String getStreet() {
+        return street;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }

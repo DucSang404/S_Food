@@ -302,7 +302,9 @@
 }
 
 .pagination button.active {
-    background-color: #444;
+    background-color: darkred;
+    font-weight: bold;
+    color: white;
 }
 
 .view_details {
@@ -321,3 +323,29 @@
 .view_details:active {
     color: #ce3131;
 }
+
+.suggestions-dropdown {
+    position: absolute; /* Đảm bảo hiển thị chồng lên các phần tử khác */
+    z-index: 1000; /* Hiển thị trên các thành phần khác */
+    background-color: #fff; /* Nền trắng */
+    width: 20%; /* Cùng kích thước với ô input */
+    max-height: 200px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng đổ */
+    list-style: none; /* Loại bỏ dấu đầu dòng */
+    padding: 0; /* Loại bỏ padding mặc định */
+    margin: 0; /* Loại bỏ margin mặc định */
+}
+
+.suggestions-dropdown li {
+    padding: 10px; /* Khoảng cách nội dung */
+    cursor: pointer; /* Thay đổi con trỏ chuột */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.suggestions-dropdown li:hover {
+    background-color: #f0f0f0; /* Đổi màu khi hover */
+}
+

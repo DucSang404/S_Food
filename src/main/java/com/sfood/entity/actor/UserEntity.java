@@ -2,6 +2,7 @@ package com.sfood.entity.actor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @MappedSuperclass
 public abstract class UserEntity {
@@ -22,13 +23,13 @@ public abstract class UserEntity {
     private String avatar;
 
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

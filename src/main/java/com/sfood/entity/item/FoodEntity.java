@@ -25,7 +25,7 @@ public class FoodEntity {
 
     @Column(name = "price")
     private Long price;
-
+    @Lob
     @Column(name = "img_url")
     private String imgUrl;
 

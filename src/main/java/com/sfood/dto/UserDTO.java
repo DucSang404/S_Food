@@ -1,10 +1,12 @@
 package com.sfood.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class UserDTO {
     private Long id;
@@ -12,11 +14,12 @@ public class UserDTO {
     private String email;
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dateOfBirth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
     private String avatar;
     private AccountDTO accountDTO;
 
-    public UserDTO(Long id, String name, String email, String phone, LocalDate dateOfBirth, String avatar) {
+    public UserDTO(Long id, String name, String email, String phone, Date dateOfBirth, String avatar) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -68,11 +71,11 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

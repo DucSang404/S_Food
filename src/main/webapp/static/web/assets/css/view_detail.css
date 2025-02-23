@@ -1,0 +1,184 @@
+/* Cấu trúc toàn trang */
+.product-page {
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    /* Nền trang */
+}
+
+/* Header với tiêu đề và nút quay lại */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.back-button {
+    padding: 10px 25px;
+    background-color: #e45050;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    color: white;
+    background-color: #be2626;
+}
+
+.page-title {
+    font-size: 32px;
+    font-family: var(--heading-font);
+    color: var(--heading-color);
+    margin: 0;
+    width: 100%;
+    border-radius: 100px;
+    background-color: whitesmoke;
+    padding: 10px 0;
+    border: 0px solid #e45050; /* Thêm viền màu đỏ với độ dày 3px */
+}
+
+/* Khu vực chi tiết sản phẩm */
+.product-detail {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    border: 2px solid #e45050;
+    /* Viền nổi bật */
+    border-radius: 10px;
+    /* Bo góc */
+    background-color: var(--surface-color);
+    /* Nền nhã nhặn */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng đổ bóng */
+}
+
+/* Cột bên trái */
+.product-left {
+    flex: 1;
+    /* Chiếm 1 phần chiều rộng */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+    margin-bottom: 15px;
+}
+
+.product-name {
+    font-size: 28px;
+    font-family: var(--heading-font);
+    color: var(--heading-color);
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.product-price span {
+    color: var(--heading-color);
+}
+
+/* Cột bên phải */
+.product-right {
+    flex: 2;
+    /* Chiếm 2 phần chiều rộng */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.product-right h3 {
+    font-size: 32px;
+    font-family: var(--heading-font);
+    color: var(--heading-color);
+    margin-bottom: 15px;
+}
+
+.product-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--default-color);
+    text-align: justify;
+}
+
+.add-cart {
+    padding: 10px 20px;
+    background-color: #e45050;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 20%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.product-right p {
+    text-align: justify;
+}
+
+.add-cart:hover {
+    scale: 1.03;
+    color: white;
+    background-color: #be2626;
+}
+
+/* Quantity */
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quantity-control button {
+    background-color: #e45050;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 60%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-control input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+

@@ -21,13 +21,13 @@ public class OrderInfoEntity {
     private String phone;
 
     @Column(name = "is_default")
-    private boolean isDefault;
+    private Boolean isDefault;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressEntity address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private CustomerEntity customer;
 
@@ -58,11 +58,11 @@ public class OrderInfoEntity {
         this.phone = phone;
     }
 
-    public boolean isDefault() {
+    public Boolean isDefault() {
         return isDefault;
     }
 
-    public void setDefault(boolean aDefault) {
+    public void setDefault(Boolean aDefault) {
         isDefault = aDefault;
     }
 

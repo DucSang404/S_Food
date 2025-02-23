@@ -1,33 +1,29 @@
 package com.sfood.dto;
 
+import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class CartDTO {
+    private List<CartItemDTO> items = new ArrayList<>();
+
     private Long id;
     private CustomerDTO customer;
     private List<CartItemDTO> lstCartItem;
 
-    public Long getId() {
-        return id;
+    public void addItem(CartItemDTO cartItemDTO) {
+        for(CartItemDTO item : items) {
+            if(item.getFood().getId().equals(cartItemDTO.getFood().getId())) {
+                item.setQuantity(item.getQuantity() + cartItemDTO.getQuantity());
+                return;
+            }
+        }
+        items.add(cartItemDTO);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public CustomerDTO getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
-    }
-
-    public List<CartItemDTO> getLstCartItem() {
-        return lstCartItem;
-    }
-
-    public void setLstCartItem(List<CartItemDTO> lstCartItem) {
-        this.lstCartItem = lstCartItem;
+    public Long getTotalItem() {
+        return (long) items.size();
     }
 }

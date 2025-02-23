@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "[customer]")
 public class CustomerEntity extends UserEntity{
     @Column(name = "loyalty_point")
-    private int loyaltyPoint;
+    private Long loyaltyPoint;
 
     @OneToOne(mappedBy = "customer")
     private SocialAccountEntity socialAccount;
@@ -28,11 +28,11 @@ public class CustomerEntity extends UserEntity{
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private CartEntity cart;
 
-    public int getLoyaltyPoint() {
+    public Long getLoyaltyPoint() {
         return loyaltyPoint;
     }
 
-    public void setLoyaltyPoint(int loyaltyPoint) {
+    public void setLoyaltyPoint(Long loyaltyPoint) {
         this.loyaltyPoint = loyaltyPoint;
     }
 

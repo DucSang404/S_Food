@@ -1,9 +1,15 @@
 package com.sfood.service.impl;
 
+import com.nimbusds.jose.JOSEException;
 import com.sfood.dto.MyUser;
 import com.sfood.entity.account.AccountEntity;
+import com.sfood.entity.account.SocialAccountEntity;
+import com.sfood.entity.actor.CustomerEntity;
 import com.sfood.enums.EnumAccountStatus;
 import com.sfood.repository.AccountRepository;
+import com.sfood.repository.CustomerRepository;
+import com.sfood.repository.SocialAccountRepository;
+import com.sfood.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +24,13 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private SocialAccountRepository socialAccountRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountEntity accountEntity = accountRepository.findOneByUserNameAndStatus(username, EnumAccountStatus.ACTIVE);
@@ -28,10 +41,23 @@ public class CustomUserDetailsService implements UserDetailsService {
         String role = determineRole(accountEntity);
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
 
-        MyUser myUser = new MyUser(accountEntity.getUsername(), accountEntity.getPassword(),
+        return new MyUser(accountEntity.getUsername(), accountEntity.getPassword(),
                 true, true, true, true, authorities);
+    }
 
-        return myUser;
+    public String generateToken(String username) throws JOSEException {
+        AccountEntity accountEntity = accountRepository.findByUserName(username);
+        CustomerEntity customerEntity = customerRepository.findById(accountEntity.getCustomer().getId());
+        return jwtUtils.generateToken(username, customerEntity.getId());
+    }
+
+    public String generateTokenSocial(String socialId) throws JOSEException {
+        SocialAccountEntity socialAccountEntity= socialAccountRepository.findByGgId(socialId);
+        if(socialAccountEntity == null) {
+            socialAccountEntity = socialAccountRepository.findByFbId(socialId);
+        }
+        CustomerEntity customerEntity = customerRepository.findById(socialAccountEntity.getCustomer().getId());
+        return jwtUtils.generateToken(socialId, customerEntity.getId());
     }
 
     public String determineRole(AccountEntity account) {

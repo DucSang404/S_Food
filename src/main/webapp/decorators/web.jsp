@@ -27,6 +27,7 @@
     <link href="<c:url value="/static/web/assets/vendor/aos/aos.css" />" rel="stylesheet">
     <link href="<c:url value="/static/web/assets/vendor/glightbox/css/glightbox.min.css" />" rel="stylesheet">
     <link href="<c:url value="/static/web/assets/vendor/swiper/swiper-bundle.min.css" />" rel="stylesheet">
+    <link rel="stylesheet" href=<c:url value="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>/>
 
     <!-- Main CSS File -->
     <link href="<c:url value='/static/web/assets/css/main.css' />" rel="stylesheet">
@@ -52,6 +53,24 @@
 <!-- Preloader -->
 <div id="preloader"></div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        updateCartCount();
+    });
+
+    function updateCartCount() {
+        fetch('/cart/count')
+            .then(response => response.json())
+            .then(data => {
+                let cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = data.count;
+                }
+            })
+            .catch(error => console.error('Error updating cart count:', error));
+    }
+</script>
+
 <!-- Vendor JS Files -->
 <script src="<c:url value="/static/web/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" />"></script>
 <script src="<c:url value="/static/web/assets/vendor/php-email-form/validate.js" />"></script>
@@ -59,6 +78,7 @@
 <script src="<c:url value="/static/web/assets/vendor/glightbox/js/glightbox.min.js" />"></script>
 <script src="<c:url value="/static/web/assets/vendor/purecounter/purecounter_vanilla.js" />"></script>
 <script src="<c:url value="/static/web/assets/vendor/swiper/swiper-bundle.min.js" />"></script>
+<script src="<c:url value="https://cdn.jsdelivr.net/npm/sweetalert2@11"/>"> </script>
 
 <!-- Main JS File -->
 <script src="<c:url value="/static/web/assets/js/main.js" />"></script>
