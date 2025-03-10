@@ -24,7 +24,7 @@ public class CustomerEntity extends UserEntity{
     @OneToMany(mappedBy = "customer")
     private List<OrderInfoEntity> orderInfo = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private CartEntity cart;
 

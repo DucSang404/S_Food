@@ -1,0 +1,102 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 900px;
+}
+
+.shopping-cart {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+    border: none;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+    border-color: #e45050;
+}
+
+.list-group-item img {
+    border-radius: 5px;
+}
+
+.fa-trash-alt {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.fa-trash-alt:hover {
+    color: #e45050;
+}
+
+/* Card Details Section */
+.card-details {
+    background-color: white;
+    color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-details h5 {
+    color: #e45050;
+    font-weight: bold;
+}
+
+.checkout-btn {
+    background-color: #e45050;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #c03d3d;
+    transform: scale(1.02);
+}
+
+/* Payment Method */
+#qr-code {
+    margin-top: 10px;
+}
+
+
+select.form-control {
+    border: 2px solid #e45050;
+    background: #fff;
+    color: #333;
+    font-weight: bold;
+}
+
+#receiver-info {
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+    white-space: normal; /* Cho phép văn bản xuống dòng nếu cần */
+    overflow: visible; /* Đảm bảo nội dung không bị cắt */
+}
+#receiver-info option {
+    max-width: 100%; /* Giới hạn chiều rộng của option để vừa khung */
+    white-space: normal;
+}
+
+#discount-code {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+#discount-code option {
+    padding: 10px;
+    white-space: normal;
+}

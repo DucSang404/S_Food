@@ -7,23 +7,23 @@ import java.util.List;
 
 @Data
 public class CartDTO {
-    private List<CartItemDTO> items = new ArrayList<>();
 
     private Long id;
     private CustomerDTO customer;
-    private List<CartItemDTO> lstCartItem;
+    private List<CartItemDTO> lstCartItem = new ArrayList<>();
+    private Long totalItem;
 
     public void addItem(CartItemDTO cartItemDTO) {
-        for(CartItemDTO item : items) {
+        for(CartItemDTO item : lstCartItem) {
             if(item.getFood().getId().equals(cartItemDTO.getFood().getId())) {
                 item.setQuantity(item.getQuantity() + cartItemDTO.getQuantity());
                 return;
             }
         }
-        items.add(cartItemDTO);
+        lstCartItem.add(cartItemDTO);
     }
 
     public Long getTotalItem() {
-        return (long) items.size();
+        return (long) lstCartItem.size();
     }
 }

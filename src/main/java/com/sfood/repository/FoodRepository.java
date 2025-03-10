@@ -13,4 +13,5 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
     long countByNameContainingIgnoreCase(String foodName);
     long countByNameContainingIgnoreCaseAndCategoryCode(String foodName, String categoryCode);
     List<FoodEntity> findByNameContainingIgnoreCase(String foodName, Pageable pageable);
+    FoodEntity findById(Long id);
 }

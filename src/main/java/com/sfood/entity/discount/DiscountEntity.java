@@ -2,6 +2,7 @@ package com.sfood.entity.discount;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @MappedSuperclass
 public abstract class DiscountEntity {
@@ -13,10 +14,10 @@ public abstract class DiscountEntity {
     private String name;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private Date endDate;
 
     @Column(name = "outstanding")
     private int outstanding;
@@ -40,19 +41,20 @@ public abstract class DiscountEntity {
         this.name = name;
     }
 
-    public LocalDateTime getStartDate() {
+
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

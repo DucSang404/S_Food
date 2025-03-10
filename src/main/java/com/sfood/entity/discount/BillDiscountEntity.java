@@ -14,10 +14,6 @@ public class BillDiscountEntity extends DiscountEntity{
 
     @Column(name = "loyalty_points_required")
     private Long loyaltyPointsRequired;
-
-    @Column(name = "maximum_amount")
-    private Long maximumAmount;
-
     @Column(name = "minimum_invoice_amount")
     private Long minimumInvoiceAmount;
 
@@ -38,14 +34,6 @@ public class BillDiscountEntity extends DiscountEntity{
 
     public void setLoyaltyPointsRequired(Long loyaltyPointsRequired) {
         this.loyaltyPointsRequired = loyaltyPointsRequired;
-    }
-
-    public Long getMaximumAmount() {
-        return maximumAmount;
-    }
-
-    public void setMaximumAmount(Long maximumAmount) {
-        this.maximumAmount = maximumAmount;
     }
 
     public Long getMinimumInvoiceAmount() {

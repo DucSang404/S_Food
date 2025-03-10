@@ -22,8 +22,6 @@
     <div class="container position-relative d-flex align-items-center justify-content-between">
 
         <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.png" alt=""> -->
             <h1 class="sitename">Yummy</h1>
             <span>.</span>
         </a>
@@ -77,3 +75,18 @@
 
     </div>
 </header>
+
+<script>
+    function updateCartCount() {
+        fetch('${pageContext.request.contextPath}/cart/count', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cart-count').textContent = data.count;
+            })
+            .catch(error => console.error('Error fetching cart count:', error))
+    }
+    document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>

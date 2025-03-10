@@ -183,7 +183,7 @@
         </dependency>
         <!--end json -->
 
-<!--        spring social-->
+        <!--        spring social-->
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-facebook</artifactId>
