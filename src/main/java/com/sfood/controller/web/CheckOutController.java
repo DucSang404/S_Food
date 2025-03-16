@@ -1,9 +1,6 @@
 package com.sfood.controller.web;
 
-import com.sfood.dto.BillDiscountDTO;
-import com.sfood.dto.CartItemDTO;
-import com.sfood.dto.CustomerDTO;
-import com.sfood.dto.OrderInfoDTO;
+import com.sfood.dto.*;
 import com.sfood.dto.other_dto.CheckOutItem;
 import com.sfood.service.impl.BillDiscountService;
 import com.sfood.service.impl.CartItemService;
@@ -41,9 +38,10 @@ public class CheckOutController {
 
         CustomerDTO user = getUserFromSession(session);
         List<OrderInfoDTO> orderInfoLst = orderInfoService.findOrderInfoByCustomerId(user.getId());
-
+        CartDTO cart = cartService.findCartByCustomerId(user.getId());
         List<BillDiscountDTO> billDiscountLst = billDiscountService.findAllValidBillDiscount();
 
+        model.addAttribute("cartId", cart.getId());
         model.addAttribute("cartItem", cartItemLst);
         model.addAttribute("orderInfo", orderInfoLst);
         model.addAttribute("billDiscount", billDiscountLst);
