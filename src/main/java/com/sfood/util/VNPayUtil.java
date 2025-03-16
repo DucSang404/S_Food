@@ -3,83 +3,74 @@ package com.sfood.util;
 import com.sfood.config.VNPayConfig;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VNPayUtil {
-
-    public static String generatePaymentUrl(String orderId, long amount) {
-        String vnp_Amount = String.valueOf(amount * 1000);
-        String vnp_TxnRef = orderId;
-        String vnp_OrderInfo = "Thanh toán đơn hàng " + orderId;
-        String vnp_CreateDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 15);
-        String vnp_ExpireDate = new SimpleDateFormat("yyyyMMddHHmmss").format(calendar.getTime());
-
-        Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", VNPayConfig.VNP_VERSION);
-        vnp_Params.put("vnp_Command", VNPayConfig.VNP_COMMAND);
-        vnp_Params.put("vnp_TmnCode", VNPayConfig.VNP_TMN_CODE);
-        vnp_Params.put("vnp_Amount", vnp_Amount);
-        vnp_Params.put("vnp_CurrCode", VNPayConfig.VNP_CURR_CODE);
-        vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
-        vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.VNP_RETURN_URL);
-        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
-        vnp_Params.put("vnp_BankCode", VNPayConfig.VNP_BANK_CODE);
-
-        List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
-        Collections.sort(fieldNames);
-
-        StringBuilder hashData = new StringBuilder();
-        StringBuilder query = new StringBuilder();
-        for (String fieldName : fieldNames) {
-            String value = vnp_Params.get(fieldName);
-            if (value != null && !value.isEmpty()) {
-                hashData.append(fieldName).append("=").append(value).append("&");
-                query.append(fieldName)
-                        .append("=")
-                        .append(URLEncoder.encode(value, StandardCharsets.UTF_8))
-                        .append("&");
+    public static String hmacSHA512(final String key, final String data) {
+        try {
+            if(key == null || data == null) {
+                throw new NullPointerException();
             }
+            final Mac hmac512 = Mac.getInstance("HmacSHA512");
+            byte[] hmacKeyBytes = key.getBytes();
+            final SecretKeySpec secretKey = new SecretKeySpec(hmacKeyBytes, "HmacSHA512");
+            hmac512.init(secretKey);
+            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
+            byte[] result = hmac512.doFinal(dataBytes);
+            StringBuilder sb = new StringBuilder(2 * result.length);
+            for (byte b : result) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "";
         }
-        if (hashData.length() > 0) {
-            hashData.deleteCharAt(hashData.length() - 1);
-        }
-        if (query.length() > 0) {
-            query.deleteCharAt(query.length() - 1);
-        }
-
-        System.out.println("Hash Data Before Signing: " + hashData.toString());
-
-        String secureHash = hmacSHA512(VNPayConfig.VNP_HASH_SECRET, hashData.toString());
-        String paymentUrl = VNPayConfig.VNP_URL + "?" + query.toString() + "&vnp_SecureHash=" + secureHash;
-        System.out.println("url:" + paymentUrl);
-        return paymentUrl;
     }
 
-
-    private static String hmacSHA512(String key, String data) {
+    public static String getIpAddress(HttpServletRequest request) {
+        String ipAddress;
         try {
-            Mac hmac = Mac.getInstance("HmacSHA512");
-            SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
-            hmac.init(secretKey);
-            byte[] bytes = hmac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hash = new StringBuilder();
-            for (byte b : bytes) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hash.append('0');
-                hash.append(hex);
+            ipAddress = request.getHeader("X-FORWARDED-FOR"); // IP thực của client
+            if(ipAddress == null) {
+                ipAddress = request.getRemoteAddr(); // Lấy địa chỉ IP trực tiếp
             }
-            return hash.toString();
-        } catch (Exception e) {
-            throw new RuntimeException("Không thể tạo chữ ký HMAC-SHA512", e);
         }
+        catch (Exception e) {
+            ipAddress = "Invalid IP:" + e.getMessage();
+        }
+        return ipAddress;
+    }
+
+    public static String getRandomNumber(int len) {
+        Random rd = new Random();
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder(len);
+        for(int i = 0; i < len; i++) {
+            sb.append(chars.charAt(rd.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    public static String getPaymentUrl(Map<String, String> paramsMap, boolean encodeKey) {
+        return paramsMap.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && !entry.getValue().isEmpty())
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry ->
+                        (encodeKey ? URLEncoder.encode(entry.getKey(), StandardCharsets.US_ASCII)
+                                : entry.getKey()) + "=" + URLEncoder.encode(entry.getValue(), StandardCharsets.US_ASCII))
+                .collect(Collectors.joining("&"));
+
+        // chuyển Map thành Stream<Map.Entry<String, String>>
+        // loại bỏ các phần tử có giá trị null hoặc rỗng
+        // sắp xếp các phần tử theo bảng chữ cái
+        // chuyển đổi từng cặp thành dạng URL query string
+        // Ghép các cặp lại thành 1 chuỗi và cách nhau bởi &
     }
 }

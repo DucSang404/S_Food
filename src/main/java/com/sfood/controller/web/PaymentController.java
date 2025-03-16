@@ -1,48 +1,32 @@
 package com.sfood.controller.web;
 
-import com.sfood.util.VNPayUtil;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import com.sfood.dto.other_dto.PaymentDTO;
+import com.sfood.dto.other_dto.ResponseObject;
+import com.sfood.service.other.PaymentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/payment")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/v1/payment")
+@RequiredArgsConstructor
 public class PaymentController {
-
-    // Xử lý yêu cầu POST tạo QR Code
-    @PostMapping("/create")
-    public Map<String, Object> createPayment(@RequestParam(value = "orderId", required = false) String orderId,
-                                             @RequestParam("amount") long amount) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            String paymentUrl = VNPayUtil.generatePaymentUrl(orderId, amount);
-
-            response.put("status", "success");
-            response.put("paymentUrl", paymentUrl);
-            response.put("amount", amount);
-        } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", e.getMessage());
-        }
-        return response;
+    private final PaymentService paymentService;
+    @GetMapping("/vn-pay")
+    public ResponseObject<PaymentDTO.VNPayResponse> pay(HttpServletRequest request) {
+        return new ResponseObject<>(HttpStatus.OK, "Success", paymentService.creatVNPayPayment(request));
     }
-
-    @GetMapping("/return")
-    public Map<String, Object> paymentReturn(@RequestParam Map<String, String> params) {
-        Map<String, Object> response = new HashMap<>();
-        String responseCode = params.get("vnp_ResponseCode");
-
-        if ("00".equals(responseCode)) {
-            response.put("status", "success");
-            response.put("message", "Thanh toán thành công!");
+    @GetMapping("/vn-pay-callback")
+    public ResponseObject<PaymentDTO.VNPayResponse> payCallbackHandler(HttpServletRequest request) {
+        String status = request.getParameter("vnp_ResponseCode");
+        if (status.equals("00")) {
+            return new ResponseObject<>(HttpStatus.OK, "Success", new PaymentDTO.VNPayResponse("00", "Success", ""));
         } else {
-            response.put("status", "failed");
-            response.put("message", "Thanh toán thất bại hoặc bị hủy!");
+            return new ResponseObject<>(HttpStatus.BAD_REQUEST, "Failed", null);
         }
-        return response;
     }
 }
